@@ -1,24 +1,48 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchProjects } from './projectsSlice';
+import { fetchProjects, setFilter } from './projectsSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Loader from '../../components/Loader';
 
 export default function ProjectsList() {
   const dispatch = useAppDispatch();
-  const { list, status } = useAppSelector(state => state.projects);
+  const { list, status, filter } = useAppSelector(state => state.projects);
 
   useEffect(() => {
-    dispatch(fetchProjects());
-  }, [dispatch]);
+    if (status === 'idle') {
+      dispatch(fetchProjects());
+    }
+  }, [dispatch, status]);
 
-  if (status === 'loading') return <Loader />;
+  const filteredProjects = useMemo(() => {
+    if (filter === 'all') return list;
+    return list.filter(project =>
+      project.tags.includes(filter)
+    );
+  }, [list, filter]);
+
+  if (status === 'loading') {
+    return <Loader />;
+  }
+
+  if (status === 'error') {
+    return <p role="alert">Failed to load projects.</p>;
+  }
 
   return (
-    <section>
-      <h2>Projects</h2>
+    <section aria-labelledby="projects-heading">
+      <h2 id="projects-heading">Projects</h2>
+      <div>
+        <button onClick={() => dispatch(setFilter('all'))}>All</button>
+        <button onClick={() => dispatch(setFilter('react'))}>React</button>
+        <button onClick={() => dispatch(setFilter('redux'))}>Redux</button>
+      </div>
+      
+      {filteredProjects.length === 0 && (
+        <p>No projects found.</p>
+      )}
 
-      {list.map(project => (
+      {filteredProjects.map(project => (
         <article key={project.id}>
           <h3>{project.title}</h3>
           <p>{project.description}</p>

@@ -4,13 +4,15 @@
     "title": "BudgetEase",
     "description": "Personal finance React application",
     "live": "",
-    "github": ""
+    "image": "budgetease.png",
+    "tags": ["react","redux"]
   },
   {
     "id": "wendigo",
     "title": "Wendigo",
     "description": "Multiplayer Horror Game",
     "live": "",
-    "github": ""
+    "image": "wendigo.png",
+    "tags":["react","redux"]
   }
 ]
