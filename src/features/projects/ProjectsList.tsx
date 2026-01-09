@@ -37,7 +37,7 @@ export default function ProjectsList() {
         <button onClick={() => dispatch(setFilter('react'))}>React</button>
         <button onClick={() => dispatch(setFilter('redux'))}>Redux</button>
       </div>
-      
+
       {filteredProjects.length === 0 && (
         <p>No projects found.</p>
       )}
@@ -45,6 +45,15 @@ export default function ProjectsList() {
       {filteredProjects.map(project => (
         <article key={project.id}>
           <h3>{project.title}</h3>
+
+          <img
+            src={`/images/${project.image}`}
+            alt={`${project.title} preview`}
+            loading="lazy"
+            width={300}
+            height={200}
+          />
+
           <p>{project.description}</p>
           <Link to={project.id}>View Details</Link>
         </article>
