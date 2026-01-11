@@ -3,7 +3,7 @@ import ThemeToggle from '../features/theme/ThemeToggle';
 
 export default function Navbar() {
   return (
-    <nav>
+    <nav role="navigation" aria-label="Main navigation">
       <NavLink to="/">Home</NavLink>
       <NavLink to="/about">About</NavLink>
       <NavLink to="/projects">Projects</NavLink>

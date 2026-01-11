@@ -11,18 +11,18 @@ const Contact = lazy(() => import('../pages/Contact'));
 
 export default function AppRoutes() {
   return (
-    <>
+   <>
     <Navbar />
-      <Suspense fallback={<Loader />}>
-        <ErrorBoundary>
+      <ErrorBoundary>
+        <Suspense fallback={<Loader />}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/projects/*" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
-        </ErrorBoundary>
-      </Suspense>
+        </Suspense>
+      </ErrorBoundary>
     </>
   );
 }

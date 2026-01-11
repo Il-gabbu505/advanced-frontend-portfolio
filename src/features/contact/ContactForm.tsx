@@ -18,44 +18,56 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} aria-live="polite">
-      <input
-        aria-label="Name"
-        value={form.name}
-        onChange={e =>
-          dispatch(updateField({ field: 'name', value: e.target.value }))
-        }
-        required
-      />
-      <input
-        aria-label="Email"
-        value={form.email}
-        onChange={e =>
-          dispatch(updateField({ field: 'email', value: e.target.value }))
-        }
-        required
-      />
-      <input
-        aria-label="Subject"
-        value={form.subject}
-        onChange={e =>
-          dispatch(updateField({ field: 'subject', value: e.target.value }))
-        }
-      />
-      <textarea
-        aria-label="Message"
-        value={form.message}
-        onChange={e =>
-          dispatch(updateField({ field: 'message', value: e.target.value }))
-        }
-        required
-      />
+    <form className="contact-form" onSubmit={handleSubmit} aria-live="polite">
+      <div className="field">
+        <label htmlFor="name">Name</label>
+        <input id="name" value={form.name}
+          onChange={e =>
+            dispatch(updateField({ field: 'name', value: e.target.value }))
+          }
+          required
+        />
+      </div>
+
+      <div className="field">
+        <label htmlFor="email">Email</label>
+        <input id="email" type="email" value={form.email}
+          onChange={e =>
+            dispatch(updateField({ field: 'email', value: e.target.value }))
+          }
+          required
+        />
+      </div>
+
+      <div className="field">
+        <label htmlFor="subject">Subject</label>
+        <input id="subject" value={form.subject}
+          onChange={e =>
+            dispatch(updateField({ field: 'subject', value: e.target.value }))
+          }
+        />
+      </div>
+
+      <div className="field">
+        <label htmlFor="message">Message</label>
+        <textarea id="message" value={form.message}
+          onChange={e =>
+            dispatch(updateField({ field: 'message', value: e.target.value }))
+          }
+          required
+        />
+      </div>
+
       <button disabled={form.status === 'loading'}>
         {form.status === 'loading' ? 'Sending…' : 'Send'}
       </button>
 
-      {form.status === 'success' && <p>Message sent!</p>}
-      {form.status === 'error' && <p>{form.error}</p>}
+      {form.status === 'success' && (
+        <p className="success">Message sent!</p>
+      )}
+      {form.status === 'error' && (
+        <p className="error">{form.error}</p>
+      )}
     </form>
   );
 }

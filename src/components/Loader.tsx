@@ -1,6 +1,6 @@
 export default function Loader() {
   return (
-    <p aria-live="polite">
+    <p role="status" aria-live="polite">
       Loading…
     </p>
   );

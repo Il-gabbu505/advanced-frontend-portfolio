@@ -1,8 +1,8 @@
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../app/hooks";
 import { toggleTheme } from "./themeSlice";
 
 export default function ThemeToggle(){
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     return(
         <button onClick={() => dispatch(toggleTheme())}>
