@@ -3,16 +3,16 @@
     "id": "budgetease",
     "title": "BudgetEase",
     "description": "Personal finance React application",
-    "live": "",
-    "image": "budgetease.png",
-    "tags": ["react","redux"]
+    "live": "https://budgetease-d90bpvzyv-gabriel-micallefs-projects.vercel.app/",
+    "image": "budgetease.webp",
+    "tags": ["redux"]
   },
   {
     "id": "wendigo",
     "title": "Wendigo",
     "description": "Multiplayer Horror Game",
-    "live": "",
-    "image": "wendigo.png",
-    "tags":["react","redux"]
+    "live": "https://wendigo-chyttxb8n-gabriel-micallefs-projects.vercel.app/",
+    "image": "wendigo.webp",
+    "tags":["react"]
   }
 ]

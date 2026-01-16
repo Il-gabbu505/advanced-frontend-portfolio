@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import type { RootState } from '../../app/store';
 import { updateField, submitContact, resetForm } from './contactSlice';
+import { motion } from 'framer-motion';
 
 export default function ContactForm() {
   const dispatch = useAppDispatch();
@@ -18,7 +19,7 @@ export default function ContactForm() {
   };
 
   return (
-    <form className="contact-form" onSubmit={handleSubmit} aria-live="polite">
+    <motion.form className="contact-form" onSubmit={handleSubmit} aria-live="polite" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
       <div className="field">
         <label htmlFor="name">Name</label>
         <input id="name" value={form.name}
@@ -68,6 +69,6 @@ export default function ContactForm() {
       {form.status === 'error' && (
         <p className="error">{form.error}</p>
       )}
-    </form>
+    </motion.form>
   );
 }

@@ -1,5 +1,6 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import Navbar from '../pages/Navbar';
 import Loader from '../components/Loader';
 import ErrorBoundary from '../components/ErrorBoundary';
@@ -10,19 +11,23 @@ const Projects = lazy(() => import('../pages/Projects'));
 const Contact = lazy(() => import('../pages/Contact'));
 
 export default function AppRoutes() {
+  const location = useLocation();
+
   return (
-   <>
-    <Navbar />
-      <ErrorBoundary>
-        <Suspense fallback={<Loader />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/projects/*" element={<Projects />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </Suspense>
-      </ErrorBoundary>
+    <>
+      <Navbar />
+      <Suspense fallback={<Loader />}>
+        <ErrorBoundary>
+          <AnimatePresence mode="wait">
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/projects/*" element={<Projects />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </AnimatePresence>
+        </ErrorBoundary>
+      </Suspense>
     </>
   );
 }

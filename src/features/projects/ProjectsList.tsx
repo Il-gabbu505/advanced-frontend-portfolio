@@ -1,10 +1,11 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useCallback, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchProjects, setFilter } from './projectsSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Loader from '../../components/Loader';
+import {motion } from 'framer-motion';
 
-export default function ProjectsList() {
+function ProjectsList() {
   const dispatch = useAppDispatch();
   const { list, status, filter } = useAppSelector(state => state.projects);
 
@@ -17,9 +18,21 @@ export default function ProjectsList() {
   const filteredProjects = useMemo(() => {
     if (filter === 'all') return list;
     return list.filter(project =>
-      project.tags.includes(filter)
+      project.tags?.includes(filter)
     );
   }, [list, filter]);
+
+  const showAll = useCallback(() => {
+    dispatch(setFilter('all'));
+  }, [dispatch]);
+
+  const showReact = useCallback(() => {
+   dispatch(setFilter('react'));
+  }, [dispatch]);
+
+  const showRedux = useCallback(() => {
+   dispatch(setFilter('redux'));
+  }, [dispatch]);
 
   if (status === 'loading') {
     return <Loader />;
@@ -30,34 +43,46 @@ export default function ProjectsList() {
   }
 
   return (
-    <section aria-labelledby="projects-heading">
+    <section className="projects" aria-labelledby="projects-heading">
       <h2 id="projects-heading">Projects</h2>
-      <div>
-        <button onClick={() => dispatch(setFilter('all'))}>All</button>
-        <button onClick={() => dispatch(setFilter('react'))}>React</button>
-        <button onClick={() => dispatch(setFilter('redux'))}>Redux</button>
+
+      <div className="filters">
+        <button className={filter === 'all' ? 'active' : ''} onClick={showAll}>All</button>
+        <button className={filter === 'react' ? 'active' : ''} onClick={showReact}>React</button>
+        <button className={filter === 'redux' ? 'active' : ''} onClick={showRedux}>Redux</button>
       </div>
 
-      {filteredProjects.length === 0 && (
-        <p>No projects found.</p>
-      )}
+      <div className="project-grid">
+        {filteredProjects.length === 0 && (
+          <p>No projects found.</p>
+        )}
 
-      {filteredProjects.map(project => (
-        <article key={project.id}>
-          <h3>{project.title}</h3>
+         {filteredProjects.map(project => (
+          <motion.article
+            key={project.id}
+            className="project-card"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.03 }}
+            transition={{ duration: 0.3 }}
+          >
+            <img
+              src={`/images/${project.image}`}
+              alt={`${project.title} preview`}
+              loading="lazy"
+            />
 
-          <img
-            src={`/images/${project.image}`}
-            alt={`${project.title} preview`}
-            loading="lazy"
-            width={300}
-            height={200}
-          />
+            <div className="project-content">
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              <Link to={project.id}>View Details →</Link>
+            </div>
+          </motion.article>
+        ))}
 
-          <p>{project.description}</p>
-          <Link to={project.id}>View Details</Link>
-        </article>
-      ))}
+      </div>
+      
     </section>
   );
 }
+export default memo(ProjectsList);
