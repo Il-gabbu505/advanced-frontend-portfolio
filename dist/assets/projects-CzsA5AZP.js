@@ -1,1 +1,0 @@
-const e=[{id:"budgetease",title:"BudgetEase",description:"Personal finance React application",live:"",image:"budgetease.png",tags:["react","redux"]},{id:"wendigo",title:"Wendigo",description:"Multiplayer Horror Game",live:"",image:"wendigo.png",tags:["react","redux"]}];export{e as default};
